@@ -107,7 +107,7 @@ def get_test(league):
     for i in teams:
         name += ['%s - %s' % (i.team_name, i.points_for)]
        
-    text = ['Teams - '] + name + '\n Max: '
+    text = ['Teams - '] + name
     return '\n'.join(text)
 
 def bot_main(function):
