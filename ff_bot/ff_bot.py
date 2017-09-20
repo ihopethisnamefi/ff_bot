@@ -102,13 +102,21 @@ def get_power_rankings(league):
 
 def get_test(league):
     teams = league.teams
-    #teams.sort(key=operator.itemgetter('points_for'))
-    teams.sort(key=lambda x: x[1])
     name = []
     for i in teams:
         name += ['%s - %s' % (i.team_name, i.points_for)]
+
+    max_score = []
+    current_max = None
+    max_team = None
+    for n in teams:
+        if (n.points_for > current_max):
+            current_max = n.points_for
+            max_team = n.team_name
     
-    text = ['Teams- '] + name
+    max_score += ['%s - %s' % (max_team, current_max)]
+        
+    text = ['Teams- '] + name + max_score
     return '\n'.join(text)
 
 def bot_main(function):
