@@ -102,7 +102,8 @@ def get_power_rankings(league):
 
 def get_test(league):
     teams = league.teams
-    teams.sort(key=operator.itemgetter('points_for'))
+    #teams.sort(key=operator.itemgetter('points_for'))
+    teams.sort(key=lambda x: x[1])
     name = []
     for i in teams:
         name += ['%s - %s' % (i.team_name, i.points_for)]
