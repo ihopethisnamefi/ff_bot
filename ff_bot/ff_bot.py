@@ -99,6 +99,10 @@ def get_power_rankings(league):
     text = ['This Week\'s Power Rankings'] + score
     return '\n'.join(text)
 
+def get_test(league):
+    text = ['test new job']
+    return '\n'.join(text)
+
 def bot_main(function):
     bot_id = os.environ["BOT_ID"]
     league_id = os.environ["LEAGUE_ID"]
@@ -124,6 +128,9 @@ def bot_main(function):
         bot.send_message(text)
     elif function=="get_power_rankings":
         text = get_power_rankings(league)
+        bot.send_message(text)
+	elif function=="get_test":
+        text = get_test(league)
         bot.send_message(text)
     elif function=="init":
         try:
@@ -172,5 +179,6 @@ if __name__ == '__main__':
     sched.add_job(bot_main, 'cron', ['get_close_scores'], id='close_scores', day_of_week='mon', hour=18, minute=30, start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard1', day_of_week='fri,mon,tue', hour=7, minute=30, start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard2', day_of_week='sun', hour='16,20', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+	sched.add_job(bot_main, 'cron', ['get_test'], id='test', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
 
     sched.start()
