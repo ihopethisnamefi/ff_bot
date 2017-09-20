@@ -101,8 +101,7 @@ def get_power_rankings(league):
 
 def get_test(league):
     teams = league.teams
-	team3 = league.teams[2]
-	
+    team3 = league.teams[2]
     text = ['Teams- '] + team3.team_name
     return '\n'.join(text)
 
