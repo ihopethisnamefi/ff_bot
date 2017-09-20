@@ -103,9 +103,9 @@ def get_power_rankings(league):
 def get_test(league):
     teams = league.teams
     name = []
-    #current_max = 1.23
+    current_max = 1.23
     for i in teams:
-        name += ['%s - %s' % (i.team_name, i.points_for)]
+        name += ['%s - %s - %s' % (i.team_name, i.points_for, current_max)]
        
     text = ['Teams - '] + name
     return '\n'.join(text)
