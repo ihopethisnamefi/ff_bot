@@ -106,17 +106,13 @@ def get_test(league):
     for i in teams:
         name += ['%s - %s' % (i.team_name, i.points_for)]
 
-    max_score = []
     current_max = None
     max_team = None
     for n in teams:
         if (n.points_for > current_max):
             current_max = n.points_for
             max_team = n.team_name
-    
-    max_score += ['%s - %s' % (max_team, current_max)]
-        
-    text = ['Teams- '] + name + max_score
+    text = ['Teams- '] + name + ['\n Max Score Team'] + max_team + [': '] + current_max
     return '\n'.join(text)
 
 def bot_main(function):
