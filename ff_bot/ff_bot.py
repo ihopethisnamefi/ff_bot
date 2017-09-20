@@ -105,8 +105,8 @@ def get_test(league):
     name = []
     current_max = 0
     for i in teams:
-	    if (i.points_for > current_max)
-		    current_max = i.points_for
+        if (i.points_for > current_max):
+            current_max = i.points_for
         name += ['%s - %s - %s' % (i.team_name, i.points_for, current_max)]
        
     text = ['Teams - '] + name
