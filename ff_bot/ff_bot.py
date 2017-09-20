@@ -105,12 +105,14 @@ def get_most_points(league):
     name = []
     current_max = 0
     team_most_points = None
+    owner_most_points = None
     for i in teams:
         if (i.points_for > current_max):
             current_max = i.points_for
             team_most_points = i.team_name
+            owner_most_points = i.owner
     
-    name += ['%s - %s' % (team_most_points, current_max)]
+    name += ['%s - %s : %s points' % (team_most_points, owner_most_points, current_max)]
        
     text = ['Current Team With Most Points: '] + name
     return '\n'.join(text)
@@ -120,12 +122,14 @@ def get_least_points(league):
     name = []
     current_least = 1000000
     team_least_points = None
+    owner_least_points = None
     for i in teams:
         if (i.points_for < current_least):
             current_least = i.points_for
             team_least_points = i.team_name
+            owner_least_points = i.owner
     
-    name += ['%s - %s' % (team_least_points, current_least)]
+    name += ['%s - %s : %s points' % (team_least_points, owner_least_points, current_least)]
        
     text = ['Current Team With Least Points: '] + name
     return '\n'.join(text)
