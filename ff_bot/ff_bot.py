@@ -101,10 +101,9 @@ def get_power_rankings(league):
 
 def get_test(league):
     teams = league.teams
+	team3 = league.teams[2]
 	
-    teamsarray = ['%s - %s' % (i[0], i[1].team_name) for i in teams
-             if i]
-    text = ['Teams- '] + teamsarray
+    text = ['Teams- '] + team3.team_name
     return '\n'.join(text)
 
 def bot_main(function):
