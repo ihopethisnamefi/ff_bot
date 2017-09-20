@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import random
+import operator
 from apscheduler.schedulers.blocking import BlockingScheduler
 from espnff import League
 
@@ -101,6 +102,7 @@ def get_power_rankings(league):
 
 def get_test(league):
     teams = league.teams
+    teams.sort(key=operator.itemgetter('points_for'))
     name = []
     for i in teams:
         name += ['%s - %s' % (i.team_name, i.points_for)]
