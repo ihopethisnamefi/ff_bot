@@ -100,7 +100,7 @@ def get_power_rankings(league):
     text = ['This Week\'s Power Rankings'] + score
     return '\n'.join(text)
 
-def get_test(league):
+def get_most_points(league):
     teams = league.teams
     name = []
     current_max = 0
@@ -113,6 +113,21 @@ def get_test(league):
     name += ['%s - %s' % (team_most_points, current_max)]
        
     text = ['Current Team With Most Points: '] + name
+    return '\n'.join(text)
+
+def get_least_points(league):
+    teams = league.teams
+    name = []
+    current_least = 1000000
+    team_least_points = None
+    for i in teams:
+        if (i.points_for < current_least):
+            current_least = i.points_for
+            team_least_points = i.team_name
+    
+    name += ['%s - %s' % (team_least_points, current_least)]
+       
+    text = ['Current Team With Least Points: '] + name
     return '\n'.join(text)
 
 def bot_main(function):
@@ -141,8 +156,11 @@ def bot_main(function):
     elif function=="get_power_rankings":
         text = get_power_rankings(league)
         bot.send_message(text)
-    elif function=="get_test":
-        text = get_test(league)
+    elif function=="get_most_points":
+        text = get_most_points(league)
+        bot.send_message(text)
+    elif function=="get_least_points":
+        text = get_least_points(league)
         bot.send_message(text)
     elif function=="init":
         try:
@@ -191,6 +209,7 @@ if __name__ == '__main__':
     sched.add_job(bot_main, 'cron', ['get_close_scores'], id='close_scores', day_of_week='mon', hour=18, minute=30, start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard1', day_of_week='fri,mon,tue', hour=7, minute=30, start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard2', day_of_week='sun', hour='16,20', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
-    sched.add_job(bot_main, 'cron', ['get_test'], id='test', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_most_points'], id='most_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_least_points'], id='least_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
 
     sched.start()
