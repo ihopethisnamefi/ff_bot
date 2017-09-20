@@ -104,12 +104,15 @@ def get_test(league):
     teams = league.teams
     name = []
     current_max = 0
+    team_most_points = None
     for i in teams:
         if (i.points_for > current_max):
             current_max = i.points_for
-        name += ['%s - %s - %s' % (i.team_name, i.points_for, current_max)]
+            team_most_points = i.team_name
+    
+    name += ['%s - %s' % (team_most_points, current_max)]
        
-    text = ['Teams - '] + name
+    text = ['Current Team With Most Points: '] + name
     return '\n'.join(text)
 
 def bot_main(function):
