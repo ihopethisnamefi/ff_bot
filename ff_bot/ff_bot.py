@@ -103,7 +103,7 @@ def get_test(league):
     teams = league.teams
     name = []
     for i in teams:
-        name += ['%s' % (i.team_name)]
+        name += ['%s - %s' % (i.team_name, i.points_for)]
     
     text = ['Teams- '] + name
     return '\n'.join(text)
