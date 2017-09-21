@@ -159,6 +159,7 @@ def get_pr():
         with open(filename) as f:
             for line in f:
                 linenumber += 1
+                line = str.replace("\n", "")
                 rankings += ['%s: %s' % (linenumber, line)]
        
     text = ['Power Rankings: '] + rankings
