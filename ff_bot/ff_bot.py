@@ -156,9 +156,9 @@ def get_pr():
         rankings += ['File could not be found']
     else:
         with open(filename) as f:
-        for line in f:
-            linenumber += 1
-            rankings += ['%s:' % (linenumber)]
+            for line in f:
+                linenumber += 1
+                rankings += ['%s:' % (linenumber)]
        
     text = ['Power Rankings: '] + rankings
     return '\n'.join(text)
