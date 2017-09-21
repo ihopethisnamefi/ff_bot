@@ -163,6 +163,8 @@ def get_pr(league):
                 strippedline = line.strip()
                 for i in teams:
                     cap_owner = i.owner.title()
+                    if (cap_owner == "Pau Pau"):
+                        cap_owner = "Pauline Han"
                     if (cap_owner == strippedline):
                         rankings += ['%s. %s - %s' % (linenumber, strippedline, i.team_name)]
        
