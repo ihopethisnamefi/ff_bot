@@ -151,7 +151,6 @@ def get_pr():
     rankings = []
     dir = os.path.dirname(__file__)
     filename = os.path.join(dir, 'pr.txt')
-    #filename = "ff_bot/pr.txt"
     linenumber = 0
     
     if not os.path.isfile(filename):
@@ -160,7 +159,7 @@ def get_pr():
         with open(filename) as f:
             for line in f:
                 linenumber += 1
-                rankings += ['%s:' % (linenumber)]
+                rankings += ['%s: %s' % (linenumber, line)]
        
     text = ['Power Rankings: '] + rankings
     return '\n'.join(text)
