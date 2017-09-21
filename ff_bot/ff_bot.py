@@ -137,8 +137,9 @@ def get_least_points(league):
 def get_points_list(league):
     teams = league.teams
     list = []
-    sorted(teams, key=lambda teams: teams.points_for)
-    for i in teams:
+    sortedteams = sorted(sortedteams, key=lambda teams: teams.points_for)
+    
+    for i in sortedteams:
         list += ['%s - %s' % (i.team_name, i.points_for)]
     
     text = ['Points List: '] + list
