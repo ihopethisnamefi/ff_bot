@@ -140,12 +140,13 @@ def get_pr():
     linenumber = 0
     for line in f:
         linenumber += 1
-        rankings += ['%s: %s' % (linenumber, line)]       
+        #rankings += ['%s: %s' % (linenumber, line)]
+        text = ['%s: %s' % (linenumber, line)]		
     f.close()
        
-    text = ['Power Rankings: '] + rankings
+    #text = ['Power Rankings: '] + rankings
     return '\n'.join(text)
-	
+
 def bot_main(function):
     bot_id = os.environ["BOT_ID"]
     league_id = os.environ["LEAGUE_ID"]
