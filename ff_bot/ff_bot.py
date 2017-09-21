@@ -138,7 +138,7 @@ def get_pr(league):
     rankings = []
     f = open('pr.txt', 'r')
     for line in f:
-         rankings += ['%s \n' % (line)]       
+         rankings += ['%s' % (line)]       
     f.close()
        
     text = ['Power Rankings: '] + rankings
