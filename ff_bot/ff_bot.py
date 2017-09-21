@@ -149,7 +149,9 @@ def get_points_list(league):
 
 def get_pr():
     rankings = []
-    filename = "\ff_bot\ff_bot\pr.txt"
+    dir = os.path.dirname(__file__)
+    filename = os.path.join(dir, '/ff_bot/pr.txt')
+    #filename = "ff_bot/pr.txt"
     linenumber = 0
     
     if not os.path.isfile(filename):
