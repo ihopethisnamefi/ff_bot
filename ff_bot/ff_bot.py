@@ -162,7 +162,8 @@ def get_pr(league):
                 linenumber += 1
                 strippedline = line.strip()
                 for i in teams:
-                    if (i.owner == strippedline):
+                    cap_owner = i.owner.title()
+                    if (cap_owner == strippedline):
                         rankings += ['%s. %s - %s' % (linenumber, strippedline, i.team_name)]
        
     text = ['This Week\'s Power Rankings: '] + rankings
