@@ -140,9 +140,9 @@ def get_points_list(league):
     sortedteams = sorted(teams, key=lambda teams: teams.points_for, reverse=True)
     
     for i in sortedteams:
-        list += ['%s - %s' % (i.team_name, i.points_for)]
+        list += ['%s. %s: %s' % (i, i.team_name, i.points_for)]
     
-    text = ['Points List: '] + list
+    text = ['Points List '] + list
     return '\n'.join(text)
 
 def get_pr():
