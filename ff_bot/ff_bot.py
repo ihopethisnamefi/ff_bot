@@ -153,7 +153,6 @@ def get_pr():
         for line in f:
             linenumber += 1
             rankings += ['%s:' % (linenumber)]
-    f.close()
        
     text = ['Power Rankings: '] + rankings
     return '\n'.join(text)
