@@ -159,10 +159,10 @@ def get_pr():
         with open(filename) as f:
             for line in f:
                 linenumber += 1
-                line = str.replace("\n", "")
+                line.rstrip()
                 rankings += ['%s: %s' % (linenumber, line)]
        
-    text = ['Power Rankings: '] + rankings
+    text = ['Power Rankings (visit http://games.espn.com/ffl/leagueoffice?leagueId=164548&seasonId=2017 for details): '] + rankings
     return '\n'.join(text)
 
 def bot_main(function):
