@@ -134,6 +134,16 @@ def get_least_points(league):
     text = ['Current Team With Least Points: '] + name
     return '\n'.join(text)
 
+def get_points_list(league):
+    teams = league.teams
+    list = []
+    sorted(teams, key=lambda teams: teams.points_for)
+    for i in teams:
+        list += ['%s - %s' % (i.team_name, i.points_for)]
+    
+    text = ['Points List: '] + list
+    return '\n'.join(text)
+
 def get_pr():
     rankings = []
     f = open("pr.txt", "r")
@@ -178,6 +188,9 @@ def bot_main(function):
         bot.send_message(text)
     elif function=="get_least_points":
         text = get_least_points(league)
+        bot.send_message(text)
+    elif function=="get_points_list":
+        text = get_points_list(league)
         bot.send_message(text)
     elif function=="get_pr":
         text = get_pr()
@@ -231,6 +244,7 @@ if __name__ == '__main__':
     sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard2', day_of_week='sun', hour='16,20', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_most_points'], id='most_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_least_points'], id='least_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_points_list'], id='points_list', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_pr'], id='pr', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
 
     sched.start()
