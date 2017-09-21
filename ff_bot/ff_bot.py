@@ -3,6 +3,7 @@ import json
 import os
 import random
 import operator
+import os.path
 from apscheduler.schedulers.blocking import BlockingScheduler
 from espnff import League
 
@@ -148,8 +149,13 @@ def get_points_list(league):
 
 def get_pr():
     rankings = []
+    filename = "pr.txt"
     linenumber = 0
-    with open('pr.txt') as f:
+    
+    if not os.path.isfile(filename):
+        rankings += ['File could not be found']
+    else:
+        with open(filename) as f:
         for line in f:
             linenumber += 1
             rankings += ['%s:' % (linenumber)]
