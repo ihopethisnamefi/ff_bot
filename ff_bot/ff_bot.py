@@ -144,7 +144,7 @@ def get_points_list(league):
         count += 1
         list += ['%s. %s: %s' % (count, i.team_name, i.points_for)]
     
-    text = ['Points List '] + list
+    text = ['Total Points List '] + list
     return '\n'.join(text)
 
 def get_pr(league):
