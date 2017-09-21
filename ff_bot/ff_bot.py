@@ -134,9 +134,9 @@ def get_least_points(league):
     text = ['Current Team With Least Points: '] + name
     return '\n'.join(text)
 
-def get_pr(league):
+def get_pr():
     rankings = []
-    f = open('pr.txt', 'r')
+    f = open("pr.txt", "r")
     linenumber = 0
     for line in f:
         linenumber += 1
@@ -179,7 +179,7 @@ def bot_main(function):
         text = get_least_points(league)
         bot.send_message(text)
     elif function=="get_pr":
-        text = get_pr(league)
+        text = get_pr()
         bot.send_message(text)
     elif function=="init":
         try:
