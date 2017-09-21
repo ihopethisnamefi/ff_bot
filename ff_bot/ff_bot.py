@@ -138,9 +138,10 @@ def get_points_list(league):
     teams = league.teams
     list = []
     sortedteams = sorted(teams, key=lambda teams: teams.points_for, reverse=True)
-    
+    count = 0
     for i in sortedteams:
-        list += ['%s. %s: %s' % (i, i.team_name, i.points_for)]
+        count += 1
+        list += ['%s. %s: %s' % (count, i.team_name, i.points_for)]
     
     text = ['Points List '] + list
     return '\n'.join(text)
