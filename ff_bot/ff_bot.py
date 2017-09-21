@@ -137,8 +137,10 @@ def get_least_points(league):
 def get_pr(league):
     rankings = []
     f = open('pr.txt', 'r')
+    linenumber = 0
     for line in f:
-         rankings += ['%s' % (line)]       
+        linenumber+=1
+        rankings += ['%s: %s' % (linenumber, line)]       
     f.close()
        
     text = ['Power Rankings: '] + rankings
