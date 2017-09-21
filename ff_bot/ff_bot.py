@@ -160,10 +160,10 @@ def get_pr(league):
         with open(filename) as f:
             for line in f:
                 linenumber += 1
-                line.rstrip()
+                line.strip()
                 for i in teams:
-                    if (i.owner == line):
-                        rankings += ['%s: %s - %s' % (linenumber, line, i.team_name)]
+                    #if (i.owner == line):
+                    rankings += ['%s: %s - %s' % (linenumber, line, i.owner)]
        
     text = ['This Week\'s Power Rankings: '] + rankings
     return '\n'.join(text)
