@@ -148,11 +148,11 @@ def get_points_list(league):
 
 def get_pr():
     rankings = []
-    f = open("pr.txt", "r")
     linenumber = 0
-    for line in f:
-        linenumber += 1
-        rankings += ['%s:' % (linenumber)]
+    with open('pr.txt') as f:
+        for line in f:
+            linenumber += 1
+            rankings += ['%s:' % (linenumber)]
     f.close()
        
     text = ['Power Rankings: '] + rankings
