@@ -147,7 +147,8 @@ def get_points_list(league):
     text = ['Points List '] + list
     return '\n'.join(text)
 
-def get_pr():
+def get_pr(league):
+    teams = league.teams
     rankings = []
     dir = os.path.dirname(__file__)
     filename = os.path.join(dir, 'pr.txt')
@@ -160,9 +161,11 @@ def get_pr():
             for line in f:
                 linenumber += 1
                 line.rstrip()
-                rankings += ['%s: %s' % (linenumber, line)]
+                for i in teams:
+                    if (i.owner == line):
+                        rankings += ['%s: %s - %s' % (linenumber, line, i.team_name)]
        
-    text = ['Power Rankings (visit http://games.espn.com/ffl/leagueoffice?leagueId=164548&seasonId=2017 for details): '] + rankings
+    text = ['This Week\'s Power Rankings: '] + rankings
     return '\n'.join(text)
 
 def bot_main(function):
@@ -201,7 +204,7 @@ def bot_main(function):
         text = get_points_list(league)
         bot.send_message(text)
     elif function=="get_pr":
-        text = get_pr()
+        text = get_pr(league)
         bot.send_message(text)
     elif function=="init":
         try:
