@@ -142,7 +142,7 @@ def get_points_list(league):
     count = 0
     for i in sortedteams:
         count += 1
-        list += ['%s. %s: %s' % (count, i.team_name, i.points_for)]
+        list += ['%s. %s - %s' % (count, i.team_name, i.points_for)]
     
     text = ['Total Points Scored List: '] + list
     return '\n'.join(text)
@@ -154,7 +154,7 @@ def get_points_against(league):
     count = 0
     for i in sortedteams:
         count += 1
-        list += ['%s. %s: %s' % (count, i.team_name, i.points_against)]
+        list += ['%s. %s - %s' % (count, i.team_name, i.points_against)]
     
     text = ['Total Points Against List: '] + list
     return '\n'.join(text)
