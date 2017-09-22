@@ -50,7 +50,7 @@ def get_scoreboard_short(league):
     score = ['%s %.2f - %.2f %s' % (i.home_team.team_abbrev, i.home_score,
              i.away_score, i.away_team.team_abbrev) for i in matchups
              if i.away_team]
-    text = ['Score Update'] + score
+    text = ['Score Update:'] + score
     return '\n'.join(text)
 
 def get_scoreboard(league):
@@ -59,7 +59,7 @@ def get_scoreboard(league):
     score = ['%s %.2f - %.2f %s' % (i.home_team.team_name, i.home_score,
              i.away_score, i.away_team.team_name) for i in matchups
              if i.away_team]
-    text = ['Score Update'] + score
+    text = ['Score Update:'] + score
     return '\n'.join(text)
 
 def get_matchups(league):
@@ -70,7 +70,7 @@ def get_matchups(league):
     score = ['%s(%s-%s) vs %s(%s-%s)' % (i.home_team.team_name, i.home_team.wins, i.home_team.losses,
              i.away_team.team_name, i.away_team.wins, i.away_team.losses) for i in matchups
              if i.away_team]
-    text = ['This Week\'s Matchups'] + score
+    text = ['This Week\'s Matchups:'] + score
     return '\n'.join(text)
 
 def get_close_scores(league):
@@ -87,7 +87,7 @@ def get_close_scores(league):
                         i.away_score, i.away_team.team_abbrev)]
     if not score:
         score = ['None']
-    text = ['Close Scores'] + score
+    text = ['Close Scores:'] + score
     return '\n'.join(text)
 
 def get_power_rankings(league):
@@ -98,7 +98,7 @@ def get_power_rankings(league):
     
     score = ['%s - %s' % (i[0], i[1].team_name) for i in pranks
              if i]
-    text = ['This Week\'s Power Rankings'] + score
+    text = ['This Week\'s Power Rankings:'] + score
     return '\n'.join(text)
 
 def get_most_points(league):
@@ -144,7 +144,7 @@ def get_points_list(league):
         count += 1
         list += ['%s. %s: %s' % (count, i.team_name, i.points_for)]
     
-    text = ['Total Points List '] + list
+    text = ['Total Points List: '] + list
     return '\n'.join(text)
 
 def get_pr(league):
@@ -168,7 +168,7 @@ def get_pr(league):
                     if (cap_owner == strippedline):
                         rankings += ['%s. %s - %s' % (linenumber, strippedline, i.team_name)]
        
-    text = ['This Week\'s Power Rankings: '] + rankings
+    text = ['This Week\'s Power Rankings (Check League page for details): '] + rankings
     return '\n'.join(text)
 
 def bot_main(function):
