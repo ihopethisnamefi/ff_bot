@@ -144,7 +144,19 @@ def get_points_list(league):
         count += 1
         list += ['%s. %s: %s' % (count, i.team_name, i.points_for)]
     
-    text = ['Total Points List: '] + list
+    text = ['Total Points Scored List: '] + list
+    return '\n'.join(text)
+
+def get_points_against(league):
+    teams = league.teams
+    list = []
+    sortedteams = sorted(teams, key=lambda teams: teams.points_against, reverse=True)
+    count = 0
+    for i in sortedteams:
+        count += 1
+        list += ['%s. %s: %s' % (count, i.team_name, i.points_against)]
+    
+    text = ['Total Points Against List: '] + list
     return '\n'.join(text)
 
 def get_pr(league):
@@ -206,6 +218,9 @@ def bot_main(function):
     elif function=="get_points_list":
         text = get_points_list(league)
         bot.send_message(text)
+    elif function=="get_points_against":
+        text = get_points_against(league)
+        bot.send_message(text)
     elif function=="get_pr":
         text = get_pr(league)
         bot.send_message(text)
@@ -259,6 +274,7 @@ if __name__ == '__main__':
     #sched.add_job(bot_main, 'cron', ['get_most_points'], id='most_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     #sched.add_job(bot_main, 'cron', ['get_least_points'], id='least_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_points_list'], id='points_list', day_of_week='tue', hour='15', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
-    sched.add_job(bot_main, 'cron', ['get_pr'], id='pr', day_of_week='tue', hour='15', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_points_against'], id='points_against', day_of_week='fri', min='0-59' start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_pr'], id='pr', day_of_week='tue', hour='15', min='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
 
     sched.start()
