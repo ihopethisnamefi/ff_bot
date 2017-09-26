@@ -34,6 +34,20 @@ class GroupMeBot(object):
             raise GroupMeException('Invalid BOT_ID')
 
         return r
+
+def pranks_week(league):
+        count = 1
+        first_team = next(iter(league.teams or []), None)
+        '''Iterate through the first team's scores until you reach a week with 0 points scored'''
+        for o in first_team.scores:
+            if o == 0:
+                if count != 1:
+                     count = count - 1  
+                break                    
+            else:
+                count = count + 1
+
+        return count
     
 def random_phrase():
     phrases = ['I\'m dead inside', 'Is this all there is to my existence?', 
