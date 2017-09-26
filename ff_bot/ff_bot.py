@@ -183,6 +183,58 @@ def get_pr(league):
     text = ['This Week\'s Power Rankings (Check League page for details): '] + rankings
     return '\n'.join(text)
 
+def get_trophies(league):
+    '''Gets trophies for highest score, lowest score, closest score, and biggest win'''
+    matchups = league.scoreboard(week=pranks_week(league))
+    low_score = 9999
+    low_team_name = ''
+    high_score = -1
+    high_team_name = ''
+    closest_score = 9999
+    close_winner = ''
+    close_loser = ''
+    biggest_blowout = -1
+    blown_out_team_name = ''
+    ownerer_team_name = ''
+
+    for i in matchups:
+        if i.home_score > high_score:
+            high_score = i.home_score
+            high_team_name = i.home_team.team_name
+        if i.home_score < low_score:
+            low_score = i.home_score
+            low_team_name = i.home_team.team_name
+        if i.away_score > high_score:
+            high_score = i.away_score
+            high_team_name = i.away_team.team_name
+        if i.away_score < low_score:
+            low_score = i.away_score
+            low_team_name = i.away_team.team_name
+        if abs(i.away_score - i.home_score) < closest_score:
+            closest_score = abs(i.away_score - i.home_score)
+            if i.away_score - i.home_score < 0:
+                close_winner = i.home_team.team_name
+                close_loser = i.away_team.team_name
+            else:
+                close_winner = i.away_team.team_name
+                close_loser = i.home_team.team_name
+        if abs(i.away_score - i.home_score) > biggest_blowout:
+            biggest_blowout = abs(i.away_score - i.home_score)
+            if i.away_score - i.home_score < 0:
+                ownerer_team_name = i.home_team.team_name
+                blown_out_team_name = i.away_team.team_name
+            else:
+                ownerer_team_name = i.away_team.team_name
+                blown_out_team_name = i.home_team.team_name
+
+    low_score_str = 'Low score: ' + low_team_name + ' with ' + str(round(low_score,2)) + 'points.\n'
+    high_score_str = 'High score: ' + high_team_name + ' with ' + str(round(high_score,2)) + 'points.\n'
+    close_score_str = close_winner + ' squeeked out a win over ' + close_loser +  ' by a margin of ' + str(round(closest_score,2)) + '\n'
+    blowout_str = blown_out_team_name + ' blown out by ' + ownerer_team_name + ' by a margin of ' + str(round(biggest_blowout,2)) + '\n'
+
+    text = 'Trophies of the week:\n' + low_score_str + high_score_str + close_score_str + blowout_str
+    return text
+
 def bot_main(function):
     bot_id = os.environ["BOT_ID"]
     league_id = os.environ["LEAGUE_ID"]
@@ -223,6 +275,9 @@ def bot_main(function):
         bot.send_message(text)
     elif function=="get_pr":
         text = get_pr(league)
+        bot.send_message(text)
+    elif function=="get_trophies":
+        text = get_trophies(league)
         bot.send_message(text)
     elif function=="init":
         try:
@@ -273,6 +328,7 @@ if __name__ == '__main__':
     sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard2', day_of_week='sun', hour='13,16', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     #sched.add_job(bot_main, 'cron', ['get_most_points'], id='most_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     #sched.add_job(bot_main, 'cron', ['get_least_points'], id='least_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_trophies'], id='trophies', day_of_week='tue', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_points_list'], id='points_list', day_of_week='tue', hour='15', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_points_against'], id='points_against', day_of_week='tue', hour='15', minute='15', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_pr'], id='pr', day_of_week='tue', hour='15', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
