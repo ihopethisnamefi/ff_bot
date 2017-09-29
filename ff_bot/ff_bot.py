@@ -58,13 +58,16 @@ def random_phrase():
                'I\'m capable of so much more', 'Sigh', 'Do not be discouraged, everyone begins in ignorance']
     return [random.choice(phrases)]
     
-def get_scoreboard_short(league):
+def get_scoreboard_short(league, final=False):
     '''Gets current week's scoreboard'''
-    matchups = league.scoreboard()
+    if not final:
+        matchups = league.scoreboard()
+    else:
+        matchups = league.scoreboard(week=pranks_week(league))
     score = ['%s %.2f - %.2f %s' % (i.home_team.team_abbrev, i.home_score,
              i.away_score, i.away_team.team_abbrev) for i in matchups
              if i.away_team]
-    text = ['Score Update:'] + score
+    text = ['Score Update'] + score
     return '\n'.join(text)
 
 def get_scoreboard(league):
@@ -293,6 +296,10 @@ def bot_main(function):
     elif function=="get_trophies":
         text = get_trophies(league)
         bot.send_message(text)
+    elif function=="get_final":
+        text = "Final " + get_scoreboard_short(league, True)
+        text = text + "\n\n" + get_trophies(league)
+        bot.send_message(text)
     elif function=="init":
         try:
             text = os.environ["INIT_MSG"]
@@ -337,12 +344,13 @@ if __name__ == '__main__':
     
     #sched.add_job(bot_main, 'cron', ['get_power_rankings'], id='power_rankings', day_of_week='tue', hour=18, minute=30, start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_matchups'], id='matchups', day_of_week='thu', hour='20', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
-    sched.add_job(bot_main, 'cron', ['get_close_scores'], id='close_scores', day_of_week='sun,mon', hour='19', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
-    sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard1', day_of_week='fri,mon,tue', hour='10', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
-    sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard2', day_of_week='sun', hour='13,16', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_close_scores'], id='close_scores', day_of_week='mon', hour='19', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard1', day_of_week='fri,mon', hour='10', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_scoreboard_short'], id='scoreboard2', day_of_week='sun', hour='16,20', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     #sched.add_job(bot_main, 'cron', ['get_most_points'], id='most_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     #sched.add_job(bot_main, 'cron', ['get_least_points'], id='least_points', day_of_week='wed', minute='0-59', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
-    sched.add_job(bot_main, 'cron', ['get_trophies'], id='trophies', day_of_week='tue', hour='11', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_final'], id='final', day_of_week='tue', hour='10', minute='30', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
+    sched.add_job(bot_main, 'cron', ['get_trophies'], id='trophies', day_of_week='tue', hour='10', minute='31', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_points_list'], id='points_list', day_of_week='tue', hour='15', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_points_against'], id='points_against', day_of_week='tue', hour='15', minute='1', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
     sched.add_job(bot_main, 'cron', ['get_pr'], id='pr', day_of_week='tue', hour='15', minute='2', start_date=ff_start_date, end_date=ff_end_date, timezone=myTimezone, replace_existing=True)
